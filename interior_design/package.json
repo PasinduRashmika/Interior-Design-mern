@@ -14,8 +14,10 @@
     "@types/react-dom": "^18.0.10",
     "aos": "^2.3.4",
     "axios": "^1.2.2",
+    "font-awesome": "^4.7.0",
     "framer-motion": "^8.0.2",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.7.2",
     "react-countup": "^6.4.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
@@ -30,6 +32,8 @@
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.6",
     "usestate": "^1.1.3",
+    "uuid": "^9.0.0",
+    "uuidv4": "^6.2.13",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

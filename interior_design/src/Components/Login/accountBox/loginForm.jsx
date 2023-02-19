@@ -76,9 +76,9 @@ export function LoginForm(props) {
 
   useEffect(() => {
     console.log('code :'+code);
-    if (code===200) {
+    if (code==200) {
       
-      history("/admin/dashboard");
+      history.push("/admin/dashboard");
     }
   }, [code]);
 

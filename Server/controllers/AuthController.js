@@ -69,9 +69,7 @@ exports.login = async (req, res, next) => {
   //2)Check if user exists && password is correct
   const user = await User.findOne({ email });
   //console.log(user);
-  
-    
-  
+
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Incorrect email or password', 401));
   }
@@ -137,7 +135,7 @@ exports.restrictTo = (...roles)=>{
   }
 }
 
-exports.fogotPassword = catchAsync(async (req,res,next)=>{
+exports.forgotPassword = catchAsync(async (req,res,next)=>{
   //1)get user based on posted email
   const user = await User.findOne({email:req.body.email})
   //console.log(user);
@@ -182,8 +180,9 @@ exports.fogotPassword = catchAsync(async (req,res,next)=>{
 exports.resetPassword=catchAsync( async(req,res,next)=>{
   //1)Get user based on the token
   const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
+  console.log("Inside of resetPassword");
 
-  const user  = await USer.findOne({passwordResetToken:hashedToken,passwordResetExpires:{$gt:Date.now()}})
+  const user  = await User.findOne({passwordResetToken:hashedToken,passwordResetExpires:{$gt:Date.now()}})
   //2)If token has not expired, and there is usert, set the new password
   if(!user){
     return next(new AppError('Token is invalid or has expired'),400);
@@ -199,7 +198,7 @@ exports.resetPassword=catchAsync( async(req,res,next)=>{
   //3) Update changedPasswordAt property for the user
 
   //4)Log the user in,send JWT
-  const token = signToken(newUser._id);
+  const token = signToken(user._id);
 
   res.status(201).json({
     status: 'success',

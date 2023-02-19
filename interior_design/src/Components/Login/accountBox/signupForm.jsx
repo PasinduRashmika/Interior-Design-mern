@@ -10,9 +10,13 @@ import {
 import { Marginer } from "../marginer";
 import { AccountContext } from "./accountContext";
 import axios from "axios";
+import AuthContext from "../../../context/auth/authContext";
 
 export function SignupForm(props) {
   const { switchToSignin } = useContext(AccountContext);
+  const authContext = useContext(AuthContext);
+
+  const { register } = authContext;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,6 +31,17 @@ export function SignupForm(props) {
       password: password,
       passwordConfirm: passwordConfirm,
     };
+    if(name==='' || email==='' || password=== '' ||passwordConfirm === ''){
+      console.log("PLZ enter fields");
+    }else if(password!==passwordConfirm){
+      console.log("Password do not match");
+    }else{
+      register({
+        name,
+        email,
+        password
+      });
+    }
     console.log(details);
 
     axios
