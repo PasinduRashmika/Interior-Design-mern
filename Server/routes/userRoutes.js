@@ -12,6 +12,8 @@ router
 
 router.post('/signup',authController.signup);
 router.post('/login',authController.login);
+router.get('/login',authController.logout);
+router.get('/getUserProfile',authController.getUserProfile);
 
 router.post('/forgotPassword',authController.forgotPassword);
 router.patch('/resetPassword/:token',authController.resetPassword);
@@ -25,7 +27,7 @@ router.delete('/deleteMe',authController.protect,userController.deleteMe);
 
 router
   .route('/:id')
-  .get(authController.protect,userController.getUser)
+  .get(/*authController.protect,*/userController.getUser)
   .put(userController.updateUser)
   .delete(userController.deleteUser);
 

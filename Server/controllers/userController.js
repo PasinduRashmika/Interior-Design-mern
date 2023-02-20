@@ -22,11 +22,8 @@ exports.getAllUsers =catchAsync( async(req,res)=>{
             users
         }
     })
-    // res.status(500).json({
-    //     status:'err',
-    //     message:'This route is not yet define' 
-    // })
 });
+
 
 exports.updateMe = catchAsync(async(req,res,next)=>{
     //1)create error if user POSTs password data

@@ -78,6 +78,29 @@ exports.login = async (req, res, next) => {
   createSendToken(user,200,req,res);
 };
 
+exports.logout = async (req,res)=>{
+  res.cookie('jwt','');
+  res.json('User Logging Out');
+};
+
+exports.getUserProfile = async(req,res)=>{
+  const token = req.cookies.jwt;
+  if(token){
+      jwt.verify(token,process.env.JWT_SECRET,async(err,decodeToken)=>{
+          if(err){
+              res.locals.user = null;
+              console.log(err.message);
+          }
+          else{
+                const user = await User.findById(decodeToken.id);
+                res.json(user);
+            }
+        })
+  }
+}
+
+
+
 exports.protect = catchAsync(async (req, res, next) => {
   //1)Getting the token and check it's there
   let token;
