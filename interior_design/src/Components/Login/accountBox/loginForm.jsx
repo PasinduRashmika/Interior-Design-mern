@@ -15,16 +15,38 @@ import 'react-notifications-component/dist/theme.css'
 import { Store } from 'react-notifications-component';
 import { useHistory } from 'react-router-dom'
 
+
+import AuthContext from "../../../context/auth/authContext";
+
+
 export function LoginForm(props) {
   const { switchToSignup } = useContext(AccountContext);
+  const authContext = useContext(AuthContext);
+  const {login,error,clearErrors,isAuthenticated} = authContext;
+
+  useEffect(()=>{
+    if(isAuthenticated){
+      history.push('/admin');
+    }
+  },[error,isAuthenticated,props.history])
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [code,setCode]=useState('');
+  const[role,setRole]=useState('');
 
   const history = useHistory();
   const onSubmit =async (e) => {
     e.preventDefault();
+
+    if(email==='' || password=== ''){
+      console.log("PLZ enter fields");
+    }else{
+      authContext.login({
+        email,
+        password,
+      });
+    }
     const details = {
       email: email,
       password:password
@@ -34,7 +56,7 @@ export function LoginForm(props) {
 
     try{
       const res= await axios.post("http://localhost:3000/api/v1/users/login", details);
-      console.log(res.data);
+      //console.log(res.data);
       setCode(res.status);
       
       Store.addNotification({
@@ -70,17 +92,18 @@ export function LoginForm(props) {
           }
         });
     }
-      // setEmail('');
-      // setPassword('');
+      setEmail('');
+      setPassword('');
   };
 
-  useEffect(() => {
-    console.log('code :'+code);
-    if (code==200) {
+  // useEffect(() => {
+  //   console.log('code :'+code);
+  //   console.log(role);
+  //   if (code==200) {
       
-      history.push("/admin/dashboard");
-    }
-  }, [code]);
+  //     history.push("/admin/dashboard");
+  //   }
+  // }, [code]);
 
   return (
     <BoxContainer onSubmit ={onSubmit}>

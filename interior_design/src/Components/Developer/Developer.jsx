@@ -14,7 +14,7 @@ import {
   Social,
   SociaLinks
 } from "./DeveloperElements";
-import img1 from "../../Images/Pasindu.jpg";
+import img1 from "../../Images/pasindu.jpg";
 import { FiPhoneCall } from "react-icons/fi";
 import { BiEnvelope } from "react-icons/bi";
 import { IconName,RiWhatsappFill } from "react-icons/ri";

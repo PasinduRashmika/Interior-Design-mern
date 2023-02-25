@@ -6,14 +6,15 @@ import AboutUs from "./Pages/AboutUs";
 import Login from "./Pages/Login";
 
 import AdminDash from './Components/AdminDash/adminDashboard'
-
+import setAuthToken from "./utils/setAuthToken";
 import AuthState from './context/auth/authState';
 import AlertState from './context/alert/alertState';
 
 function App() {
   return (
-    //<AuthState>
-    <AlertState>
+    
+    <AuthState>
+    {/* <AlertState> */}
     <Router>
       <div className="App">
       <ScrollToTop/>
@@ -52,8 +53,8 @@ function App() {
         </div>
       </div>
     </Router>
-    </AlertState>
-    //</AuthState>
+    {/* </AlertState> */}
+    </AuthState>
   );
 }
 
