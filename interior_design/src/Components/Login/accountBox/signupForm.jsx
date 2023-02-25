@@ -12,16 +12,25 @@ import { AccountContext } from "./accountContext";
 import axios from "axios";
 import AuthContext from "../../../context/auth/authContext";
 
-export function SignupForm(props) {
+const SignupForm =(props)=> {
   const { switchToSignin } = useContext(AccountContext);
   const authContext = useContext(AuthContext);
 
-  const { register } = authContext;
+  const {register,error,clearErrors,isAuthenticated} = authContext;
+
+  useEffect(()=>{
+    if(isAuthenticated){
+      console.log('Authenticated');
+      this.props.history.push('/login')
+    }
+  },[error,isAuthenticated,props.history])
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+
+  console.log({authContext});
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -36,17 +45,18 @@ export function SignupForm(props) {
     }else if(password!==passwordConfirm){
       console.log("Password do not match");
     }else{
-      register({
+      authContext.register({
         name,
         email,
-        password
+        password,
+        passwordConfirm
       });
     }
     console.log(details);
 
-    axios
-      .post("http://localhost:3000/api/v1/users/signup", details)
-      .then((res) => console.log(res.data));
+    // axios
+    //   .post("http://localhost:3000/api/v1/users/signup", details)
+    //   .then((res) => console.log(res.data));
 
 
       setName('');
@@ -90,9 +100,11 @@ export function SignupForm(props) {
       <MutedLink href="#">
         Already have an account?
         <BoldLink href="/login" onClick={switchToSignin}>
-          Signin
+          Login
         </BoldLink>
       </MutedLink>
     </BoxContainer>
   );
 }
+
+export { SignupForm}

@@ -73,7 +73,7 @@ export const CsscImg1 = styled.div`
 export const CsscImg2 = styled.div`
   width: 100%;
   height: auto;
-  padding: 5% 5%;
+  padding: 15% 5%;
 
   @media screen and (max-width: 1200px) {
     padding: 2% 5%;

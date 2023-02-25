@@ -13,8 +13,8 @@ import {
   LOGOUT,
   CLEAR_ERRORS,
 } from "../types";
+import setAuthToken from "../../utils/setAuthToken";
 
-const initialState = {};
 
 const AuthState = props=>{
     const initialState = {
@@ -23,21 +23,26 @@ const AuthState = props=>{
         user:null,
         error:null,
     };
-    const {state, dispatch} = useReducer(authReducer, initialState);
+    const [state, dispatch] = useReducer(authReducer, initialState);
 
-    //LOad User
+    //Load User
     const loadUser = async ()=>{
-        // try{
-        //     const res = await axios.get('http://localhost:3000/api/v1/users/getUserProfile');
-        //     console.log(res.data);
-        // dispatch({
-        //     type:USER_LOADED,
-        //     payload:res.data
-        // })
-        // }catch(err){
-        //     console.log(err);
-        //     dispatch({type:AUTH_ERROR})
-        // }
+        if(localStorage.token){
+            setAuthToken(localStorage.token);
+        }
+        //console.log("AuthState "+localStorage.token);
+        try{
+            const res = await axios.get('http://localhost:3000/api/v1/users/getUserProfile');
+            //console.log(res.data);
+        dispatch({
+            type:USER_LOADED,
+            payload:res.data
+            
+        })
+        }catch(err){
+            console.log(err);
+            dispatch({type:AUTH_ERROR})
+        }
     }
 
     //Regitser User
@@ -55,8 +60,10 @@ const AuthState = props=>{
             type: REGISTER_SUCCESS,
             payload:res.data
         })
+        loadUser();
+
     }catch(err){
-        console.log(err.response.data);
+        console.log(err.response);
         dispatch({
             type: REGISTER_FAIL,
             payload:err.response.data.msg
@@ -65,8 +72,29 @@ const AuthState = props=>{
     }
 
     //Login USer 
-    const login = ()=>{
-        console.log('login');
+    const login = async formData =>{
+        const config ={
+            headers:{
+                'Content-Type':'application/json'
+            }
+        }
+
+    try{
+        const res = await axios.post('http://localhost:3000/api/v1/users/login',formData,config);
+        console.log(res.data);
+        dispatch({
+            type: LOGIN_SUCCESS,
+            payload:res.data
+        })
+        loadUser();
+        
+    }catch(err){
+        console.log(err.response);
+        dispatch({
+            type: LOGIN_FAIL,
+            payload:err.response.data.msg
+        })
+    }
     }
 
     //Logout
@@ -81,7 +109,7 @@ const AuthState = props=>{
 
     return(
         <AuthContext.Provider
-        values={{
+        value={{
             isAuthenticated:state.isAuthenticated,
             loading:state.loading,
             user:state.user,
