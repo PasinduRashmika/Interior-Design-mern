@@ -11,19 +11,22 @@ import { Marginer } from "../marginer";
 import { AccountContext } from "./accountContext";
 import axios from "axios";
 import AuthContext from "../../../context/auth/authContext";
+import { BrowserRouter as Router,useNavigate } from 'react-router-dom'
+
 
 const SignupForm =(props)=> {
   const { switchToSignin } = useContext(AccountContext);
   const authContext = useContext(AuthContext);
 
   const {register,error,clearErrors,isAuthenticated} = authContext;
+  const navigate = useNavigate();
 
   useEffect(()=>{
     if(isAuthenticated){
       console.log('Authenticated');
-      this.props.history.push('/login')
+      navigate('/login')
     }
-  },[error,isAuthenticated,props.history])
+  },[isAuthenticated])
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
