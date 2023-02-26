@@ -5,6 +5,7 @@ const catchAsync = require('./../utils/catchAsync');
 const jwt = require('jsonwebtoken');
 const AppError = require('./../utils/appError');
 const sendEmail = require('./../utils/email');
+const Email = require('../utils/email');
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -51,6 +52,10 @@ exports.signup = async (req, res, next) => {
       error: error,
     });
   }
+  const URL = `${req.protocol}://${req.get('host')}/login`
+  // const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
+
+    await new Email(newUser, URL, URL).sendWelcome();
   res.status(201).json({
     status: 'success',
     token,
@@ -182,14 +187,15 @@ exports.forgotPassword = catchAsync(async (req,res,next)=>{
   const message = `Fogot your passwor? Submit a PATCH request with your new password and passowrdConfirm to : ${resetURL}.\nIf you didn't  foget your password, please ignore this email.`;
 
   try{
-    await sendEmail({
-      email:user.email,
-      subject:'Your password reset token (valid for 10 minutes',
-      message
-    });
+    // await new sendEmail({
+    //   email: user.email,
+    //   subject:'Your password reset token (valid for 10 minutes',
+    //   message
+    // });
+    await new Email(user, resetURL, resetURL).sendPasswordReset();
     res.status(200).json({
       status:'success',
-      message:'Token sent to email'
+      message:'Token sent to email',
     });
   }catch(err){
     console.log(err);
@@ -203,9 +209,12 @@ exports.forgotPassword = catchAsync(async (req,res,next)=>{
 })
 
 exports.resetPassword=catchAsync( async(req,res,next)=>{
+  const { resetToken } = req.params;
+    let userType = '';
+    // let token = ''
+
   //1)Get user based on the token
   const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
-  console.log("Inside of resetPassword");
 
   const user  = await User.findOne({passwordResetToken:hashedToken,passwordResetExpires:{$gt:Date.now()}})
   //2)If token has not expired, and there is usert, set the new password

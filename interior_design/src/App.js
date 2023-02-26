@@ -1,9 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter ,Routes, Route } from "react-router-dom";
 import ScrollToTop from './Hooks/ScrollToTop';
 import Home from "./Pages/Home";
 import AboutUs from "./Pages/AboutUs";
 import Login from "./Pages/Login";
+import Forgotpassword from './Pages/forgotPassword'
 
 import AdminDash from './Components/AdminDash/adminDashboard'
 import setAuthToken from "./utils/setAuthToken";
@@ -15,44 +16,39 @@ function App() {
     
     <AuthState>
     {/* <AlertState> */}
-    <Router>
+    <BrowserRouter>
+    
       <div className="App">
       <ScrollToTop/>
-        {/* <ScrollToTop/> */}
+      
         <div className="content">
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route exact path="/home">
-              <Home />
-            </Route>
-            <Route exact path="/services">
-              <Home />
-            </Route>
-            <Route exact path="/pages">
-              <Home />
-            </Route>
-            <Route exact path="/portfolio">
-              <Home />
-            </Route>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/admin/dashboard">
-            <AdminDash />
-            </Route>
-            <Route exact path="/aboutus">
-              <AboutUs />
-            </Route>
+        <Routes >
+            <Route  path="/" element={<Home />} exact />
+              
+            <Route  path="/home"  element={<Home />} exact/>
+  
+            <Route  path="/services"  element={<Home />} exact/>
 
+            <Route  path="/pages"  element={<Home />} exact/>
+
+            <Route  path="/portfolio"  element={<Home />} exact/>
+
+            <Route  path="/login"  element={<Login />} exact/>
+
+            <Route  path="/admin/dashboard"  element={<AdminDash />} exact/>
+
+            <Route  path="/aboutus"  element={<AboutUs />} exact/>
+
+            <Route  path="/forgotpassword"  element={<Forgotpassword />} exact/>
             {/* <Route exact path="/resorcepersons">
             <ResorcePersons />
           </Route> */}
-          </Switch>
+          </Routes>
         </div>
+        
       </div>
-    </Router>
+      
+    </BrowserRouter>
     {/* </AlertState> */}
     </AuthState>
   );

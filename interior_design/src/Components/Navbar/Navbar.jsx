@@ -13,7 +13,7 @@ import {
 } from "./NavbarElements";
 import { Link } from "react-router-dom";
 import img1 from "../../Images/galaxypng.png";
-import { BrowserRouter } from "react-router-dom/cjs/react-router-dom.min";
+
 import { HashLink as Links } from "react-router-hash-link/dist/react-router-hash-link.cjs.production";
 import Aos from "aos";
 import "aos/dist/aos.css";

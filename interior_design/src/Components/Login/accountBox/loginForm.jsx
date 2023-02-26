@@ -13,7 +13,7 @@ import { AccountContext } from "./accountContext";
 import { ReactNotifications } from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
 import { Store } from 'react-notifications-component';
-import { useHistory } from 'react-router-dom'
+import { BrowserRouter as Router,useNavigate } from 'react-router-dom'
 
 
 import AuthContext from "../../../context/auth/authContext";
@@ -23,24 +23,38 @@ export function LoginForm(props) {
   const { switchToSignup } = useContext(AccountContext);
   const authContext = useContext(AuthContext);
   const {login,error,clearErrors,isAuthenticated} = authContext;
+  const navigate = useNavigate();
 
   useEffect(()=>{
     if(isAuthenticated){
-      history.push('/admin');
+      navigate('/Admin/DashBoard');
     }
-  },[error,isAuthenticated,props.history])
+  },[isAuthenticated])
+
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [code,setCode]=useState('');
   const[role,setRole]=useState('');
 
-  const history = useHistory();
   const onSubmit =async (e) => {
     e.preventDefault();
 
     if(email==='' || password=== ''){
       console.log("PLZ enter fields");
+      Store.addNotification({
+        title: "Please Enter Fields",  //https://www.npmjs.com/package/react-notifications-component
+        message: "",
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 5000,
+          onScreen: true
+        }
+      });
     }else{
       authContext.login({
         email,
@@ -115,9 +129,9 @@ export function LoginForm(props) {
           onChange={(e) => setPassword(e.target.value)} />
       </FormContainer>
       <Marginer direction="vertical" margin={10} />
-      <MutedLink href="#">Forget your password?</MutedLink>
+      <MutedLink href="/forgotpassword">Forget your password?</MutedLink>
       <Marginer direction="vertical" margin="1.6em" />
-      <SubmitButton type="submit">Signin</SubmitButton>
+      <SubmitButton type="submit">Login</SubmitButton>
       <Marginer direction="vertical" margin="1em" />
       <MutedLink href="#">
         Don't have an accoun?{" "}

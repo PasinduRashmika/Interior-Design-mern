@@ -19,8 +19,8 @@ import Gallery from "../Components/Gallery/WSPGallery";
 const Home = () => {
     return (
         <div className="container">
-            <SubNav data-aos="fade-down"/>
-            <Navbar data-aos="fade-down"/>
+            <SubNav />
+            <Navbar />
             <Hero />
             <Mission />
             <Guarantee />
