@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:client":"npm i --prefix ./../interior_design && npm run build --prefix ./../interior_design",
-    "start": "npm i && node server.js",
+    "build:client":"npm i --prefix ./../interior_design && npm run build --prefix ./../interior_design && npm i",
+    "start": "node server.js",
     "start:dev": "set NODE_ENV=development&&nodemon server.js",
     "start:prod": "set NODE_ENV=production&&nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
