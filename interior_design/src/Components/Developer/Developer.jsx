@@ -43,7 +43,7 @@ const csscRuhsh = () => {
       </CsscHeading>
       <CsscThings>
         <CsscImg1>
-          <img src={img1} />
+          {/* <img src={img1} /> */}
           <CsscSub ></CsscSub>
         </CsscImg1>
         <CsscImg2>
