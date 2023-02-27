@@ -6,7 +6,7 @@ const sendErrorDev = (err,res)=>{
         stack:err.stack
 });
 }
-const sendErrorProd =(req,res)=>{
+const sendErrorProd =(err,res)=>{
     //Operational,trusted error:send message client
     if(err.isOperational){
         res.status(err.statusCode).json({
@@ -19,7 +19,7 @@ const sendErrorProd =(req,res)=>{
         console.error('ERROR 💥',err);
 
         //2)send generate message
-        res.staus(500).json({
+        res.status(500).json({
             status:'error',
             message:'Something went very wrong'
         })
