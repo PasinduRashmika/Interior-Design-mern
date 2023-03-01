@@ -15,7 +15,7 @@ import {
   SociaLinks
 } from "./DeveloperElements";
 // import img1 from "../../Images/pasindu.jpg";
-// import img1 from "./../../Images/pasindu.jpg";
+import img1 from "./../../Images/pasindu.jpg";
 import { FiPhoneCall } from "react-icons/fi";
 import { BiEnvelope } from "react-icons/bi";
 import { IconName,RiWhatsappFill } from "react-icons/ri";
@@ -43,7 +43,7 @@ const csscRuhsh = () => {
       </CsscHeading>
       <CsscThings>
         <CsscImg1>
-          {/* <img src={img1} /> */}
+          <img src={img1} />
           <CsscSub ></CsscSub>
         </CsscImg1>
         <CsscImg2>
